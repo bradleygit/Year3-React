@@ -1,35 +1,34 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import './App.css';
-
-class Session extends React.Component{
+class Session extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data:this.props.data
+            data: this.props.data
         }
     }
 
-    render(){
-        console.log();
+    render() {
         return (
             <div className="Session">
-                <p>{this.state.data.type}</p>
+                <p>Session Type: {this.state.data.type} Session Name: {this.state.data.name}</p>
             </div>
         );
     }
 }
 
-class Day extends React.Component{
+class Day extends React.Component {
 
     handleDayClick = () => {
-        this.setState({displayData:!this.state.displayData})
+        this.setState({displayData: !this.state.displayData})
     }
 
 
-    componentDidMount(){
-        this.setState({day:this.props.day})
-        let url = "http://localhost/Assignment3/api/schedule?day="+this.state.day;
+    componentDidMount() {
+        this.setState({day: this.props.day})
+        let url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/schedule?day=" + this.state.day;
         this.fetchFromURL(url);
     }
 
@@ -38,7 +37,7 @@ class Day extends React.Component{
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                this.setState({data:data.data})
+                this.setState({data: data.data})
             })
             .catch((err) => {
                     console.log("something went wrong ", err)
@@ -48,20 +47,25 @@ class Day extends React.Component{
     }
 
 
-
     constructor(props) {
         super(props);
         this.state = {
-            day:this.props.day,
-            displayData:false,
-            data:[]
+            day: this.props.day,
+            displayData: false,
+            data: []
         }
     }
-    render(){
+
+    render() {
         return (
             <div className="Day">
                 <h2 onClick={this.handleDayClick}>{this.props.day}</h2>
-                {this.state.displayData ? this.state.data.map((data,i)=>(<Session key={i} data={data}/>)) : ""}
+                {this.state.displayData ?
+                    <div className="DaySession">
+                        {this.state.data.map((data, i) => (<Session key={i} data={data}/>))}
+                    </div>
+                    : ""}
+
             </div>
         );
 
@@ -91,7 +95,7 @@ function test(){
             );
     }
 
-    
+
 }
 
 class Schedule extends React.Component{
@@ -109,10 +113,32 @@ class Schedule extends React.Component{
 
 function App() {
     return (
-        <div className="App">
-            <h1 className="Title">Schedule</h1>
-            <Schedule/>
-        </div>
+        <Router>
+            <div className="App">
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/admin">Admin</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <Switch>
+                    <Route path="/">
+                        <h1 className="Title">Schedule</h1>
+                        <Schedule/>
+                    </Route>
+                    <Route path="/admin">
+                        <h1 className="Title">Admin</h1>
+                    </Route>
+                    <Route path="*">
+                        404 Not Found
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 

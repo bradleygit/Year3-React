@@ -43,6 +43,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="sql.code.style.group" />
+    <property name="ts.external.directory.path" value="E:\PHP Storm\PhpStorm 2020.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Node.js/Chrome.Unnamed">
@@ -90,6 +91,10 @@
       <workItem from="1609718633306" duration="36000" />
       <workItem from="1609718713093" duration="155000" />
       <workItem from="1609719034291" duration="24000" />
+      <workItem from="1609800361644" duration="4531000" />
+      <workItem from="1609856954470" duration="1778000" />
+      <workItem from="1609947788016" duration="584000" />
+      <workItem from="1610023885722" duration="9465000" />
     </task>
     <servers />
   </component>
