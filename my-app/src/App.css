@@ -21,7 +21,10 @@ label { display: inline-block; width: 100px; text-align: right; }
   border-radius: 10px;
   margin-top:5%;
 }
-
+.message{
+ color: red;
+  text-transform: uppercase;
+}
 .DaySession{
   background-color: lightblue;
   height: 20vh;

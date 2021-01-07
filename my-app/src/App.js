@@ -5,35 +5,9 @@ import Schedule from './Components/Schedule.js'
 import Admin from './Components/Admin.js'
 
 
-function test() {
-
-    let myJSON = {"username": "John", "password": "top_secret!"};
-    const postJSON = (api, json) => {
-        fetch(api, {
-            method: 'POST',
-            headers: new Headers(),
-            body: JSON.stringify(json)
-        })
-            .then(
-                function (response) {
-                    return response.json();
-                })
-            .then(
-                function (data) {
-                    console.log(data);
-                })
-            .catch(function (err) {
-                    console.log("Something went wrong!", err);
-                }
-            );
-    }
-}
-
-
 function App() {
     return (
-
-        <Router>
+        <Router basename="/KF6012/part2">
             <nav>
                 <ul>
                     <li>

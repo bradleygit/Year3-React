@@ -15,11 +15,36 @@ class Admin extends React.Component {
         this.state = {
             email: "",
             password: "",
-            token: null,
+            authenticated: false,
             message:""
         }
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+    }
+
+
+    updateCallback = (data) => {
+        console.log(data)
+        if (data.status !== 200) {
+            this.setState({"authenticated":false});
+            localStorage.removeItem('myToken');
+        }
+    }
+    handleLogoutClick = () => {
+        this.setState({"authenticated":false})
+        this.setState({email:""});
+        this.setState({password:""});
+    }
+
+
+    handleUpdateClick = () => {
+        const url = "http://192.168.64.2/kf6012/week10/a/api/update"
+        let myJSON = {
+            "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJmaXJzdG5hbWUiOiJKb2huIiwibGFzdG5hbWUiOiJSb29rc2J5IiwiaWF0IjoxNjA2NzUxMjg3LCJleHAiOjE2MDY4Mzc2ODd9.sEU-4rzU6gHK6_PcDFQXpaX7BCtziAJdNQ2PHCX_1Bs",
+            "film_id":"2",
+            "description":"xyz"
+        }
+        this.postData(url, myJSON, this.updateCallback);
     }
 
     handleChange(event) {
@@ -27,28 +52,43 @@ class Admin extends React.Component {
     }
 
     handleEmail = (e) => {
-        this.setState({email:e.target.value})
+        this.setState({email:e.target.value});
     }
     handlePassword = (e) => {
-        this.setState({password:e.target.value})
+        this.setState({password:e.target.value});
+    }
+
+    postData = (url, myJSON, callback) => {
+        fetch(url, {   method: 'POST',
+            headers : new Headers(),
+            body:JSON.stringify(myJSON)})
+            .then( (response) => response.json())
+            .then( (data) => {
+                callback(data);
+            })
+            .catch ((err) => {
+                    console.log("something went wrong ", err);
+                }
+            );
+    }
+
+    loginCallback = (data) => {
+        console.log(data)
+        if (data.status === 200) {
+            this.setState({"authenticated":true, "token":data.token})
+            localStorage.setItem('myToken', data.token);
+            this.setState({message:""})
+        }
+        else{
+            this.setState({message:data.message});
+        }
     }
 
     handleLoginClick = () => {
-        let myJSON = {"email": this.state.email, "password": this.state.password};
         const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/login"
-        fetch(url, {
-            method: 'POST',
-            headers: new Headers(),
-            body: JSON.stringify(myJSON)
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-            })
-            .catch((err) => {
-                    console.log("something went wrong ", err)
-                }
-            );
+        let myJSON = {"email":this.state.email, "password":this.state.password}
+        console.log(this.state.email + " "+ this.state.password);
+        this.postData(url, myJSON, this.loginCallback)
     }
 
     generateLogin() {
@@ -57,11 +97,27 @@ class Admin extends React.Component {
                 <label>Email:</label> <input type="text" value={this.state.email} onChange={this.handleEmail}/><br/>
                 <label>Password:</label> <input type="password" value={this.state.password} onChange={this.handlePassword}/><br/>
                 <button onClick={this.handleLoginClick} disabled={false}>Log in</button>
+                <p className="message">{this.state.message}</p>
             </div>)
     };
 
+
+    generateAdmin(){
+        if (this.state.authenticated) {
+            return (
+                <div className="loginForm">
+
+                    <button onClick={this.handleUpdateClick}>Update</button>
+                    <button onClick={this.handleLogoutClick}>Log out</button>
+
+                </div>
+            );
+        }
+    }
+
+
     checkLoggedIn() {
-        return (this.state.token == null ? this.generateLogin() : "");
+        return (this.state.authenticated === false ? this.generateLogin() : this.generateAdmin());
     }
 
 
