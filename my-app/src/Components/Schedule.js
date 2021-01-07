@@ -1,6 +1,12 @@
 import Day from "./Day";
 import React from 'react';
 
+
+/**
+ * Manages each of the 4 scheduled days
+ *
+ * @author Bradley Slater
+ */
 class Schedule extends React.Component{
 
     render(){

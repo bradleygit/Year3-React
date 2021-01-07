@@ -1,5 +1,9 @@
 import React from 'react';
-
+/**
+ * Component renders each of the days sessions
+ *
+ * @author Bradley Slater
+ */
 
 class Session extends React.Component {
 

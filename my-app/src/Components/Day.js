@@ -1,7 +1,11 @@
 import Session from "./Session";
 import React from 'react';
 
-
+/**
+ * Manages the data for each of the scheduled days
+ *
+ * @author Bradley Slater
+ */
 class Day extends React.Component {
 
     handleDayClick = () => {
