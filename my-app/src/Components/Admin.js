@@ -38,12 +38,8 @@ class Admin extends React.Component {
 
 
     handleUpdateClick = () => {
-        const url = "http://192.168.64.2/kf6012/week10/a/api/update"
-        let myJSON = {
-            "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJmaXJzdG5hbWUiOiJKb2huIiwibGFzdG5hbWUiOiJSb29rc2J5IiwiaWF0IjoxNjA2NzUxMjg3LCJleHAiOjE2MDY4Mzc2ODd9.sEU-4rzU6gHK6_PcDFQXpaX7BCtziAJdNQ2PHCX_1Bs",
-            "film_id":"2",
-            "description":"xyz"
-        }
+        const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/update"
+        let myJSON = {"sessionId":"2375", "name":"test","token":localStorage.getItem('myToken')}
         this.postData(url, myJSON, this.updateCallback);
     }
 
