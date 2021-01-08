@@ -16,10 +16,14 @@ class Admin extends React.Component {
             email: "",
             password: "",
             authenticated: false,
-            message:""
+            message:"",
+            ID:"",
+            name:""
         }
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handleID = this.handleID.bind(this);
+        this.handleName = this.handleName.bind(this);
     }
 
 
@@ -39,7 +43,7 @@ class Admin extends React.Component {
 
     handleUpdateClick = () => {
         const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/update"
-        let myJSON = {"sessionId":"2375", "name":"test","token":localStorage.getItem('myToken')}
+        let myJSON = {"sessionId":this.state.ID, "name":this.state.name,"token":localStorage.getItem('myToken')}
         this.postData(url, myJSON, this.updateCallback);
     }
 
@@ -53,7 +57,12 @@ class Admin extends React.Component {
     handlePassword = (e) => {
         this.setState({password:e.target.value});
     }
-
+    handleID = (e) => {
+        this.setState({ID:e.target.value});
+    }
+    handleName = (e) => {
+        this.setState({name:e.target.value});
+    }
     postData = (url, myJSON, callback) => {
         fetch(url, {   method: 'POST',
             headers : new Headers(),
@@ -102,10 +111,10 @@ class Admin extends React.Component {
         if (this.state.authenticated) {
             return (
                 <div className="loginForm">
-
+                    <label>Session Name:</label> <input type="text" value={this.state.name} onChange={this.handleName}/><br/>
+                    <label>Session ID:</label> <input type="text" value={this.state.ID} onChange={this.handleID}/><br/>
                     <button onClick={this.handleUpdateClick}>Update</button>
                     <button onClick={this.handleLogoutClick}>Log out</button>
-
                 </div>
             );
         }
