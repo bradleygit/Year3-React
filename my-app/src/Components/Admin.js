@@ -28,7 +28,6 @@ class Admin extends React.Component {
 
 
     updateCallback = (data) => {
-        console.log(data)
         if (data.status !== 200) {
             this.setState({"authenticated":false});
             localStorage.removeItem('myToken');
@@ -97,7 +96,6 @@ class Admin extends React.Component {
         const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/login"
         this.setState({message:"Processing..."})
         let myJSON = {"email":this.state.email === "" ? null:this.state.email, "password":this.state.password === ""?null:this.state.password}
-        console.log(this.state.email + " "+ this.state.password);
         this.postData(url, myJSON, this.loginCallback)
     }
 
