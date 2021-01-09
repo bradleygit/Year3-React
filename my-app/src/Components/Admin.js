@@ -42,7 +42,7 @@ class Admin extends React.Component {
 
 
     handleUpdateClick = () => {
-        const url = "http://localhost/KF6012/part1/api/update"
+        const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/update"
         let myJSON = {"sessionId":this.state.ID, "name":this.state.name,"token":localStorage.getItem('myToken')}
         this.postData(url, myJSON, this.updateCallback);
     }
@@ -95,7 +95,7 @@ class Admin extends React.Component {
     }
 
     handleLoginClick = () => {
-        const url = "http://localhost/KF6012/part1/api/login"
+        const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/login"
         let myJSON = {"email":this.state.email, "password":this.state.password}
         console.log(this.state.email + " "+ this.state.password);
         this.postData(url, myJSON, this.loginCallback)

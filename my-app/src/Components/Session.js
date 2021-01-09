@@ -17,7 +17,7 @@ class Session extends React.Component {
     render() {
         return (
             <div className="Session">
-                <p>Session Name: {this.state.data.name}<div className="SessionDetails"><p>Author Name: {this.state.data.AuthorName} </p><p>Time Start: {formatTime(true,this.state.data.startHour) +":"+ formatTime(false,this.state.data.startMinute) }</p>
+                <p>Session Name: {this.state.data.name}<div className="SessionDetails"><p>Author Name: {this.state.data.authorName} </p><p>Room : {this.state.data.roomName}</p><p>Time Start: {formatTime(true,this.state.data.startHour) +":"+ formatTime(false,this.state.data.startMinute) }</p>
                 End Time: {formatTime(true,this.state.data.endHour) +":"+ formatTime(false,this.state.data.endMinute)}  </div></p><hr/>
                 </div>
         );

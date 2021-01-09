@@ -11,13 +11,13 @@ class Author extends React.Component {
     render() {
         let text = "";
         if(this.props.data.sessionName !== null){
-            text = <p>Session Name : {this.props.data.sessionName} <br/>Day: {this.props.data.day}<br/>Time Start: {formatTime(true,this.props.data.startHour)}:{formatTime(false,this.props.data.startMinute)}<br/>
-            Time End: {formatTime(true,this.props.data.endHour)}:{formatTime(false,this.props.data.endMinute)}<br/>Room: {this.props.data.roomName}</p>
+            text = <div><hr/><p>Session Name : {this.props.data.sessionName} <br/>Day: {this.props.data.day}<br/>Time Start: {formatTime(true,this.props.data.startHour)}:{formatTime(false,this.props.data.startMinute)}<br/>
+            Time End: {formatTime(true,this.props.data.endHour)}:{formatTime(false,this.props.data.endMinute)}<br/>Room: {this.props.data.roomName}</p></div>
         }
         return (
             <div className="author">
-                <p> {this.props.data.authorName}</p>
-                {text !== "" ? <p>{text}</p> : ""}
+                <p> Author Name: {this.props.data.authorName}</p>
+                {text}
             </div>
         );
     }
@@ -63,7 +63,6 @@ class Authors extends React.Component {
             pageSize:10,
             query:"",
             data:[],
-            schedule:[]
         }
         this.handleSearch = this.handleSearch.bind(this);
     }
@@ -73,7 +72,7 @@ class Authors extends React.Component {
     }
 
     fetchAuthors = () => {
-        fetch("http://localhost/KF6012/part1/api/authors?getsessions=true")
+        fetch("http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/authors?getsessions")
         .then((response) => response.json())
             .then((data) => {
                 this.setState({data: data.data})
@@ -117,14 +116,15 @@ class Authors extends React.Component {
         let filteredData =  (
             this.state.data.filter(this.searchName)
         )
-        let noOfPages = Math.ceil(filteredData.length/this.state.pageSize)
-        if (noOfPages === 0) {noOfPages=1}
-        let disabledPrevious = (this.state.page <= 1)
-        let disabledNext = (this.state.page >= noOfPages)
-
+        let noOfPages = Math.ceil(filteredData.length/this.state.pageSize);
+        if (noOfPages === 0) {noOfPages=1};
+        let disabledPrevious = (this.state.page <= 1);
+        let disabledNext = (this.state.page >= noOfPages);
+        let loading = this.state.data.length === 0 ? <div className = "message">Loading Data...</div>:null; //this is here if network speed is low -> seems like it hasnt worked then all the data appears
         return (
             <div className="daysContainer">
                 <Search query={this.state.query} handleSearch={this.handleSearch}/>
+                {loading}
                 {
                     filteredData.slice(((this.state.pageSize*this.state.page)-this.state.pageSize),(this.state.pageSize*this.state.page))
                         .map( (data, i) => (<Author key={i} data={data} />) )
