@@ -94,7 +94,7 @@ class Admin extends React.Component {
     }
 
     handleLoginClick = () => {
-        const url = "http://localhost/KF6012/part1/api/login"
+        const url = "http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/login"
         this.setState({message:"Processing..."})
         let myJSON = {"email":this.state.email === "" ? null:this.state.email, "password":this.state.password === ""?null:this.state.password}
         console.log(this.state.email + " "+ this.state.password);
