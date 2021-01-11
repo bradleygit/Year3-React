@@ -1,22 +1,63 @@
 import React from 'react';
+import Session from "./Session";
+
+class AuthorData extends React.Component {
+
+        state = {
+            data:this.props.data
+        }
+
+
+    render(){
+        return(
+            <div className="AuthorData"><p>Title: {this.state.data.title}</p><p>Abstract: {this.state.data.abstract}</p><p>Award: {this.state.data.award ===""?"none":this.state.data.award}</p></div>
+        );
+    }
+
+
+}
+
+
 
 class Author extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            data: this.props.data,
+            additionalData:[],
+            displayData :false
         }
+    }
+    componentDidMount() {
+        this.fetchAuthorDataWithID(this.state.data.authorId);
+    }
+
+    handleClick = () => {
+            this.setState({displayData: !this.state.displayData})
+
+    }
+
+    fetchAuthorDataWithID = (authorId) => {
+        fetch("http://localhost/KF6012/part1/api/content?author="+authorId)
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({additionalData: data.data})
+            })
+            .catch((err) => {
+                    console.log("something went wrong ", err)
+                }
+            );
     }
 
     render() {
         let text = "";
-        if(this.props.data.sessionName !== null){
-            text = <div><hr/><p>Session Name : {this.props.data.sessionName} <br/>Day: {this.props.data.day}<br/>Time Start: {formatTime(true,this.props.data.startHour)}:{formatTime(false,this.props.data.startMinute)}<br/>
-            Time End: {formatTime(true,this.props.data.endHour)}:{formatTime(false,this.props.data.endMinute)}<br/>Room: {this.props.data.roomName}</p></div>
-        }
+        if(this.state.displayData){
+            text = this.state.additionalData.map((data, i) => (<AuthorData key={i} data={data}/>))
+   }
         return (
             <div className="author">
-                <p> Author Name: {this.props.data.authorName}</p><p> Author Institution: {this.props.data.authorInst}</p>
+                <div onClick={this.handleClick}><p> Author Name: {this.props.data.authorName}</p><p> Author Institution: {this.props.data.authorInst}</p></div>
                 {text}
             </div>
         );
@@ -39,21 +80,6 @@ class Search extends React.Component {
     }
 }
 
-function formatTime(isHour,time){
-    if(isHour){
-        if(time<10){
-            return "0"+time;
-        }
-        return time;
-    }
-    else{
-        if(time<10){
-            return time +"0";
-        }
-        return time;
-    }
-}
-
 class Authors extends React.Component {
 
     constructor(props) {
@@ -72,7 +98,7 @@ class Authors extends React.Component {
     }
 
     fetchAuthors = () => {
-        fetch("http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/authors?getsessions")
+        fetch("http://localhost/KF6012/part1/api/authors/")
         .then((response) => response.json())
             .then((data) => {
                 this.setState({data: data.data})
@@ -82,10 +108,6 @@ class Authors extends React.Component {
                 }
             );
     }
-
-
-
-
 
     handlePreviousClick = () => {
         this.setState({page:this.state.page-1})
@@ -100,6 +122,7 @@ class Authors extends React.Component {
     }
 
     searchString = (s) => {
+
         return s.toLowerCase().includes(this.state.query.toLowerCase())
     }
 
@@ -115,6 +138,7 @@ class Authors extends React.Component {
     render() {
         let filteredData =  (
             this.state.data.filter(this.searchName)
+
         )
         let noOfPages = Math.ceil(filteredData.length/this.state.pageSize);
         if (noOfPages === 0) {noOfPages=1};
