@@ -35,7 +35,6 @@ class Author extends React.Component {
     render() {
         let text = "";
         if(this.state.displayData){
-            console.log(this.state.additionalData)
             text = this.state.additionalData.map((data, i) => (<AuthorData key={i} data={data}/>))
             }
         return (
@@ -81,7 +80,7 @@ class Authors extends React.Component {
     }
 
     fetchAuthors = () => {
-        fetch("http://localhost/KF6012/part1/api/authors/")
+        fetch("http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/authors/")
         .then((response) => response.json())
             .then((data) => {
                 this.setState({data: data.data})

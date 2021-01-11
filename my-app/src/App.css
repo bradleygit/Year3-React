@@ -37,7 +37,7 @@ label { display: inline-block; width: 150px; text-align: left; }
 .DaySession{
   background-color: lightblue;
   height: 30vh;
-  overflow: scroll;
+  overflow-y: scroll
 }
 
 .Session{
@@ -69,6 +69,10 @@ nav li {
   float: left;
 }
 
+.adminDetails{
+  height: 30vh;
+  overflow: scroll;
+}
 nav li a {
   display: block;
   color: white;

@@ -15,9 +15,6 @@ class Session extends React.Component {
         }
     }
 
-    componentDidMount() {
-    }
-
 
     fetchPresentationAuthors = (url, element) => {
         fetch(url)
@@ -41,18 +38,13 @@ class Session extends React.Component {
         let authorData = this.state.data.Authors;
         return (
             <div className="Session">
-                <p>Session Name: {this.state.data.sessionName} </p>
-                <div className="SessionDetails"><p>Author Chair: {this.state.data.authorName} </p><p>Room
-                    : {this.state.data.roomName}</p><p>Time
+                <p>Session Name: {this.state.data.sessionName} </p><div className="SessionDetails"><p>Author Chair: {this.state.data.authorName} </p><p>Room : {this.state.data.roomName}</p><p>Time
                     Start: {formatTime(true, this.state.data.startHour) + ":" + formatTime(false, this.state.data.startMinute)}</p>End
                     Time: {formatTime(true, this.state.data.endHour) + ":" + formatTime(false, this.state.data.endMinute)}
                 </div>
 
 
-                {
-
-
-                    this.state.data.Authors.length !== 0 ? authorData.map((data,i)=>(<Presentation key={i} data={data}/>)) : ""}
+                {this.state.data.Authors.length !== 0 ? authorData.map((data,i)=>(<Presentation key={i} data={data}/>)) : ""}
                 <hr/>
 
             </div>
