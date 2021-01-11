@@ -36,8 +36,18 @@ label { display: inline-block; width: 150px; text-align: left; }
 }
 .DaySession{
   background-color: lightblue;
-  height: 20vh;
+  height: 30vh;
   overflow: scroll;
+}
+
+.Session{
+  margin-top:20px;
+}
+
+.Presentation{
+  border:solid darkblue;
+  border-radius: 10px;
+  margin-top:10px;
 }
 
 body{

@@ -16,7 +16,7 @@ class Author extends React.Component {
         }
         return (
             <div className="author">
-                <p> Author Name: {this.props.data.authorName}</p>
+                <p> Author Name: {this.props.data.authorName}</p><p> Author Institution: {this.props.data.authorInst}</p>
                 {text}
             </div>
         );

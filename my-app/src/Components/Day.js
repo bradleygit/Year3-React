@@ -34,6 +34,9 @@ class Day extends React.Component {
     }
 
 
+
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +54,7 @@ class Day extends React.Component {
                     <div className="DaySession">
                         {this.state.data.map((data, i) => (<Session key={i} data={data}/>))}
                     </div>
+
                     : ""}
 
             </div>
