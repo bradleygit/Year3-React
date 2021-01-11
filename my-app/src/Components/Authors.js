@@ -1,23 +1,5 @@
 import React from 'react';
-import Session from "./Session";
-
-class AuthorData extends React.Component {
-
-        state = {
-            data:this.props.data
-        }
-
-
-    render(){
-        return(
-            <div className="AuthorData"><p>Title: {this.state.data.title}</p><p>Abstract: {this.state.data.abstract}</p><p>Award: {this.state.data.award ===""?"none":this.state.data.award}</p></div>
-        );
-    }
-
-
-}
-
-
+import AuthorData from './AuthorData.js'
 
 class Author extends React.Component {
 
@@ -35,11 +17,11 @@ class Author extends React.Component {
 
     handleClick = () => {
             this.setState({displayData: !this.state.displayData})
-
     }
 
     fetchAuthorDataWithID = (authorId) => {
-        fetch("http://localhost/KF6012/part1/api/content?author="+authorId)
+
+        fetch("http://unn-w17004559.newnumyspace.co.uk/KF6012/part1/api/content?author="+authorId)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({additionalData: data.data})
@@ -53,8 +35,9 @@ class Author extends React.Component {
     render() {
         let text = "";
         if(this.state.displayData){
+            console.log(this.state.additionalData)
             text = this.state.additionalData.map((data, i) => (<AuthorData key={i} data={data}/>))
-   }
+            }
         return (
             <div className="author">
                 <div onClick={this.handleClick}><p> Author Name: {this.props.data.authorName}</p><p> Author Institution: {this.props.data.authorInst}</p></div>
